@@ -1,0 +1,120 @@
+.booking-page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover; /* Ensure the background image covers the area */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  /* position: relative; */
+  color: black; /* Text color for readability */
+}
+
+.form-overlay {
+  background-color: #fff; /* Darker overlay for better text visibility */
+  padding: 20px;
+  padding-top: 10px;
+  border-radius: 12px;
+  margin-left: 140px;
+  width: 80%;
+  max-width: 1000px;
+  box-sizing: border-box;
+  text-align: center; /* Center align text */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Add subtle shadow for better focus */
+}
+
+.form-overlay h2 {
+  color: #700e0e; /* Ensure title is visible */
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.tour-info h3 {
+  margin: 10px 0 5px;
+  font-size: 24px;
+  color: #ffd700; /* Highlight tour title in gold */
+}
+
+.tour-info p {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align form elements */
+}
+
+.form-group {
+  margin-bottom: 15px;
+  width: 100%; /* Ensure input fields stretch across */
+  max-width: 750px; /* Limit width for larger screens */
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  margin-left: 100px;
+  color: #38a169; /* Subtle label color */
+  font-size: 18px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  margin-left: 100px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  background-color: #ffffff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Slight inner shadow for input depth */
+}
+
+.form-group textarea {
+  resize: none; /* Prevent resizing for consistent design */
+}
+
+.submit-btn {
+  background-color: #28a745; /* Green button color */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%; /* Button fills container width */
+  max-width: 300px; /* Limit the button size */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.submit-btn:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+@media (max-width: 768px) {
+  .form-overlay {
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .tour-info h3 {
+    font-size: 20px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 13px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+  }
+}

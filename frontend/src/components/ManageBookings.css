@@ -1,0 +1,77 @@
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Buttons styling */
+.btn {
+  padding: 5px 10px;  /* Shorter buttons */
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.confirm-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.delete {
+  background-color: #f44336;
+}
+
+/* Add New Booking Form Styling */
+.form-section {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.form-section input {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  width: calc(50% - 10px);
+  border: 1px solid #ddd;
+}
+
+.form-section button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-section button:hover {
+  background-color: #45a049;
+}
+
+.table-container {
+  overflow-x: auto; /* For responsive table */
+}

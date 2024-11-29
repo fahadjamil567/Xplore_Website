@@ -1,0 +1,23 @@
+/* Flexbox structure for the layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Takes up available space */
+}
+
+.content {
+  flex: 1; /* Grows to fill the space between the header/sidebar and footer */
+}
+
+footer {
+  background-color: #0d6c34;
+  color: white;
+  text-align: center;
+  padding: 0.5rem;
+}
