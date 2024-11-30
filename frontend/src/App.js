@@ -20,7 +20,7 @@ import ManageDestinations from './components/ManageDestinations.jsx';
 import ManageTours from './components/ManageTours.jsx';
 import Review from './components/Review.jsx';
 import ContactUs from './components/ContactUs.jsx';
-import SideBar from './components/adminSideBar.jsx';
+import AdminSideBar from './components/adminSideBar.jsx';
 import TourGuide from './components/TourGuide.jsx';
 import TermsOfService from './components/TermsOfService.jsx';
 import BookingPage from './components/BookingPage.jsx';
@@ -30,7 +30,6 @@ import Chatbox from './components/ChatRoom.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import CarRental from './components/CarRental';
 import Privacy from './components/PrivacyPolicy.jsx';
-import MyBookings from './components/MyBookings.jsx';
 import Chatbot from './components/Chatbot.jsx';
 import AdminQueryResponse from './components/AdminQueryResponse.jsx';
 // Layout Components
@@ -45,7 +44,7 @@ const UserLayout = ({ children }) => (
 
 const AdminLayout = ({ children }) => (
   <>
-    <SideBar />
+    <AdminSideBar />
     <main>{children}</main>
   </>
 );
@@ -251,14 +250,7 @@ const App = () => {
             </UserLayout>
           }
         />
-        <Route
-          path="/MyBookings"
-          element={
-            <UserLayout>
-              <MyBookings />
-            </UserLayout>
-          }
-        />
+
         {/* Default route */}
         <Route path="*" element={<Login />} />
       </Routes>

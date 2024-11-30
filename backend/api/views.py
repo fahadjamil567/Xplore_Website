@@ -17,6 +17,7 @@ from django.core.files.storage import default_storage
 from django.shortcuts import get_object_or_404
 import os
 import google.generativeai as genai
+import requests
 
 
 # User Signup
