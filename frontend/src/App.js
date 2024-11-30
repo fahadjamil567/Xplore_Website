@@ -4,12 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Import your components
 import Header from './components/header.jsx';
 import Footer from './components/footer.jsx';
-import SignNew from './components/signnew.jsx';
 import Login from './components/login.jsx';
 import SignUp from './components/signup.jsx';
 import Home from './components/home.jsx';
 import Tours from './components/tours.jsx';
-import Trek from './components/trek.jsx';
 import Feedback from './components/feedback.jsx';
 import FAQs from './components/faqs.jsx';
 import AboutUs from './components/aboutus.jsx';
@@ -17,7 +15,6 @@ import UserProfile from './components/UserProfile.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
 import ManageBookings from './components/ManageBookings.jsx';
 import ManageDestinations from './components/ManageDestinations.jsx';
-import ManageTours from './components/ManageTours.jsx';
 import Review from './components/Review.jsx';
 import ContactUs from './components/ContactUs.jsx';
 import AdminSideBar from './components/adminSideBar.jsx';
@@ -82,14 +79,6 @@ const App = () => {
           }
         />
         <Route
-          path="/managetours"
-          element={
-            <AdminLayout>
-              <ManageTours />
-            </AdminLayout>
-          }
-        />
-        <Route
           path="/AdminQuery"
           element={
             <AdminLayout>
@@ -111,14 +100,6 @@ const App = () => {
           element={
             <UserLayout>
               <Tours />
-            </UserLayout>
-          }
-        />
-        <Route
-          path="/trek"
-          element={
-            <UserLayout>
-              <Trek />
             </UserLayout>
           }
         />
@@ -167,14 +148,6 @@ const App = () => {
           element={
             <UserLayout>
               <ContactUs />
-            </UserLayout>
-          }
-        />
-        <Route
-          path="/signnew"
-          element={
-            <UserLayout>
-              <SignNew />
             </UserLayout>
           }
         />

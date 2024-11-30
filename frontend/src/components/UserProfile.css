@@ -4,9 +4,10 @@ body {
   padding: 0;
 }
 
-.container {
-  width: 60%;
+.profilecontainer {
+  width: 70%;
   margin: auto;
+  margin-left: 350px;
   background: #ffff;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -62,10 +63,26 @@ nav ul li a.active {
   padding: 10px;
   margin-top: 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
 }
 
 .btn:hover {
+  background-color: #45a049;
+}
+
+.reviewbtn{
+  font-size:medium;
+  padding: 7px;
+  margin-top: 1px;
+  margin-left: 10px;
+  border: #000;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.reviewbtn:hover {
   background-color: #45a049;
 }
