@@ -4,7 +4,7 @@ import './BookingPage.css';
 
 const BookingPage = () => {
   const { state } = useLocation();
-  const { DestinationId, title, location, price, image, loggedInEmail } = state || {};
+  const { DestinationId, title, location, price, image, loggedInEmail, startDate } = state || {};
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ const BookingPage = () => {
     loggedInEmail: loggedInEmail || '',
     numberOfPeople: 1,
     specialRequests: '',
-    travelDate: '', // Added travel date
+    travelDate: startDate || '', // Use startDate from state if available
   });
 
   const [loading, setLoading] = useState(true);
@@ -47,7 +47,7 @@ const BookingPage = () => {
     }
   }, [loggedInEmail]);
 
-  if (!DestinationId || !title || !location || !price || !image) {
+  if (!DestinationId || !title || !location || !price || !image || !startDate) {
     return <h2>No details available for the selected tour. Please go back and select again.</h2>;
   }
 
@@ -68,7 +68,7 @@ const BookingPage = () => {
       loggedInEmail: formData.loggedInEmail,
       numTickets: formData.numberOfPeople,
       specialRequests: formData.specialRequests,
-      travelDate: formData.travelDate, // Added travel date
+      startDate: formData.travelDate, // Use travelDate as startDate
     };
 
     sessionStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
@@ -81,7 +81,7 @@ const BookingPage = () => {
         price: parseFloat(price),
         image,
         loggedInEmail,
-        travelDate: formData.travelDate, // Pass travel date to payment page
+        travelDate: formData.travelDate, // Pass travelDate to payment page
         DestinationId,
       },
     });
@@ -139,11 +139,12 @@ const BookingPage = () => {
             <label htmlFor="travelDate">Travel Date:</label>
             <input
               type="date"
-              id="travelDate"
-              name="travelDate"
+              id="travelDate" // Use travelDate here
+              name="travelDate" // Also update the name attribute to "travelDate"
               value={formData.travelDate}
               onChange={handleInputChange}
               required
+              disabled
             />
           </div>
           <button type="submit" className="submit-btn">Proceed to Payment</button>
