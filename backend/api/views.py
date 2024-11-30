@@ -10,6 +10,7 @@ from .models import User, Booking, Wishlist, Destination, ChatMessage
 from .serializers import UserSerializer, BookingSerializer, DestinationSerializer, WishlistSerializer, ChatMessageSerializer
 from django.conf import settings
 from datetime import datetime
+import requests
 import os
 from rest_framework.parsers import MultiPartParser
 from django.core.files.storage import default_storage
@@ -115,6 +116,7 @@ def update_user_profile(request):
 # Weather Forecast
 class WeatherForecastView(APIView):
     def get(self, request):
+        
         city = request.query_params.get("city", "").strip()
         if not city:
             return Response({"error": "City name is required"}, status=status.HTTP_400_BAD_REQUEST)
@@ -173,12 +175,13 @@ class AddBookingView(APIView):
         status = request.data.get('Status')
         tickets = request.data.get('Tickets')  # Number of tickets
         price_per_head = request.data.get('PricePerHead')  # Price per ticket (Price per head)
-
+        print(user_email)
         
         
         try:
             # Fetch user by email
             user = User.objects.get(email=user_email)
+            print(user)
         except User.DoesNotExist:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -207,6 +210,8 @@ class AddBookingView(APIView):
             'Tickets': tickets,
             'Price': total_price_str  # Save the calculated total price as a string
         }
+
+        print(booking_data)
         
         
 

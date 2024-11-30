@@ -33,7 +33,7 @@ const PaymentPage = () => {
         UserEmail: bookingDetails.loggedInEmail,  // User email
         DestinationId: location.state?.DestinationId || 'Unknown',  // Ensure DestinationId is passed correctly
         Departure: location.state?.title || 'Unknown',  // Set departure as title
-        TravelDate: bookingDetails.travelDate,  // Travel date
+        TravelDate: bookingDetails.startDate,  // Travel date
         BookingDate: new Date().toISOString().split('T')[0],  // Current date for booking
         Status: 'Pending',  // Default status
         Tickets: bookingDetails.numTickets,  // Number of tickets
@@ -94,7 +94,7 @@ const PaymentPage = () => {
         <h3>Customer Details</h3>
         <p><strong>Name:</strong> {bookingDetails.name}</p>
         <p><strong>Email:</strong> {bookingDetails.loggedInEmail}</p>
-        <p><strong>Travel Date:</strong> {bookingDetails.travelDate}</p>
+        <p><strong>Travel Date:</strong> {bookingDetails.startDate}</p>
 
         <button className="pay-btn" onClick={handlePayment}>
           Pay Now
