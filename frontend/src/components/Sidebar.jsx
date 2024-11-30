@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaHome, FaMapMarkedAlt, FaComments, FaUser, FaQuestionCircle, FaInfoCircle, FaStar, FaSun, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaMapMarkedAlt, FaComments, FaUser, FaQuestionCircle, FaInfoCircle, FaStar, FaSun, FaSignOutAlt, FaAngleDown, FaChalkboard } from 'react-icons/fa';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -30,6 +30,9 @@ const Sidebar = () => {
         </Link>
         <Link to="/chat" className="sidebar-link">
           <FaComments /> {isOpen && 'Chatroom'}
+        </Link>
+        <Link to="/chatbot" className="sidebar-link">
+          <FaChalkboard /> {isOpen && 'Xplore AI'}
         </Link>
         <Link to="/userprofile" className="sidebar-link">
           <FaUser /> {isOpen && 'User Profile'}

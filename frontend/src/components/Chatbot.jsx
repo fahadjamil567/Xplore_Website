@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";  // Importing Axios
 import "./Chatbot.css";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowRight, FaCircleArrowRight } from "react-icons/fa6";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -10,9 +12,9 @@ const Chat = () => {
 
   const quickActions = [
     "Tell me about the latest AI developments",
-    "How can I improve my productivity?",
-    "Give me some learning resources",
-    "Help me with problem-solving",
+    "How expensive is it to travel?",
+    "Should I explore Pakistan?",
+    "Whats best destination in Northern Pakistan?",
   ];
 
   useEffect(() => {
@@ -75,7 +77,7 @@ const Chat = () => {
     <div className="main-container">
       <div className="chat-interface">
         <div className="header">
-          <h1>AI Assistant</h1>
+          <h1>Xplore AI Assistant</h1>
           <p className="subtitle">
             Your personal AI companion for daily tasks and information
           </p>
@@ -122,12 +124,15 @@ const Chat = () => {
             disabled={isLoading}
             rows="2"
           />
-          <button
+          <div
             onClick={() => handleSend()}
+            onDragEnter={() => handleSend()}
             disabled={isLoading || !inputMessage.trim()}
           >
-            Send
-          </button>
+            {/* Send */}
+            <FaArrowAltCircleRight />
+          </div>
+          
         </div>
       </div>
     </div>

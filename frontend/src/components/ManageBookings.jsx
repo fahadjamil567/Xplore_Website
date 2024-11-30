@@ -78,7 +78,7 @@ const ManageBookings = () => {
   return (
     <div className="manage-bookings">
       <div className="content">
-        <div className="container">
+        <div className="container" style={styles.container}>
           <h2>Manage Bookings</h2>
 
           {/* Existing Bookings Section */}
@@ -197,4 +197,15 @@ const ManageBookings = () => {
   );
 };
 
+const styles = {
+  container: {
+      width: '80%',
+      marginTop: '100px',
+      marginLeft: '300px',
+      background: '#fff',
+      padding: '20px',
+      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+      borderRadius: '8px',
+  },
+};
 export default ManageBookings;

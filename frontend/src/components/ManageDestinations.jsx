@@ -216,7 +216,7 @@ const styles = {
     container: {
         width: '80%',
         marginTop: '100px',
-        marginLeft: '200px',
+        marginLeft: '300px',
         background: '#fff',
         padding: '20px',
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
