@@ -23,6 +23,30 @@ const Chat = () => {
     }
   }, [messages]);
 
+  const renderFormattedMessage = (text) => {
+    const lines = text.split("\n");
+
+    return lines.map((line, index) => {
+      // Clean the line, remove extra spaces or unexpected characters
+      const cleanedLine = line.trim();
+
+      // If the line starts with "**" for headings
+      if (cleanedLine.startsWith("**")) {
+        const heading = cleanedLine.replace(/\*\*/g, ""); // remove the '**' around the heading text
+        return <h2 key={index}>{heading}</h2>;
+      } 
+      // If the line starts with "*" for bullet points
+      else if (cleanedLine.startsWith("*") && cleanedLine.length > 1) {
+        return <li key={index}>{cleanedLine.slice(1).trim()}</li>; // Removes the '*' and trims the content
+      } 
+      // For normal paragraphs
+      else if (cleanedLine === "") {
+        return <br key={index} />;
+      } else {
+        return <p key={index}>{cleanedLine}</p>;
+      }
+    });
+  };
   const handleSend = async (message = inputMessage) => {
     if (!message.trim()) return;
 
@@ -79,7 +103,7 @@ const Chat = () => {
         <div className="header">
           <h1>Xplore AI Assistant</h1>
           <p className="subtitle">
-            Your personal AI companion for daily tasks and information
+            Your personal AI companion for traveling and exploring
           </p>
         </div>
 
@@ -101,7 +125,13 @@ const Chat = () => {
               key={index}
               className={`message ${message.isUser ? "user-message" : "ai-message"}`}
             >
-              {message.text}
+              {message.isUser ? (
+                <p>{message.text}</p>
+              ) : (
+                <div>
+                  {renderFormattedMessage(message.text)}
+                </div>
+              )}
             </div>
           ))}
           {isLoading && (
@@ -125,14 +155,12 @@ const Chat = () => {
             rows="2"
           />
           <div
+            className="send-button-container"
             onClick={() => handleSend()}
-            onDragEnter={() => handleSend()}
             disabled={isLoading || !inputMessage.trim()}
           >
-            {/* Send */}
-            <FaArrowAltCircleRight />
+            <FaArrowAltCircleRight className="send-button-icon" />
           </div>
-          
         </div>
       </div>
     </div>

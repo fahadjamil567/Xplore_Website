@@ -54,6 +54,7 @@
     background-color: #28a745;
     color: white;
     align-self: flex-end;
+    margin-left: auto;
   }
   
   /* Time styling */

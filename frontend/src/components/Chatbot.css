@@ -1,14 +1,15 @@
 /* src/components/Chat.css */
 :root {
-  --primary-color: #066341; /* Green zinc blue */
-  --secondary-color: #528d70; /* Muted teal */
-  --accent-color: #1c8546; /* Soft cyan */
-  --text-color: #f1f6f9; /* Clean white */
-  --background-dark: #085529; /* Dark forest green */
-  --background-light: #e2f3f1; /* Light nature feel */
-  --message-color-user: #7588ce; /* Light teal for user messages */
-  --message-color-ai: #c2c2a9; /* Soft muted green for AI responses */
+  --primary-color: #035c2c; /* Match sidebar green */
+  --secondary-color: #047a3c; /* Slightly lighter green for accents */
+  --accent-color: #06a04c; /* Bright green for highlights */
+  --text-color: #ffffff; /* Clean white text */
+  --background-dark: #013d1c; /* Dark green for background */
+  --background-light: #f3f4f6; /* Neutral light grey */
+  --message-color-user: #04844d; /* Muted green for user messages */
+  --message-color-ai: #d4e9d5; /* Soft greenish white for AI responses */
 }
+
 
 /* --message-color-user: #6fb5d5; /* Light teal for user messages */
 /* --message-color-ai: #c8be3b; Soft muted green for AI responses */
@@ -17,14 +18,14 @@
   min-height: 100vh;
   padding: 20px;
   background: var(--background-light);
-  background-image: linear-gradient(45deg, rgba(45, 187, 17, 0.67), rgb(34, 104, 15));
+  background-image: linear-gradient(120deg, #035c2c, #047a3c);
   /* background-image: url("/public/images/ai.jpg"); */
 }
 
 .chat-interface {
   max-width: 1200px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
   border-radius: 15px;
   padding: 20px;
@@ -38,15 +39,13 @@
 }
 
 .header h1 {
-  margin: 0;
-  font-size: 2.5em;
-  text-shadow: 2px 2px 4px rgba(255, 255, 255);
+  color: var(--text-color);
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+.subtitle {
+  color: #d4e9d5;
 }
 
-.subtitle {
-  color: #b0b0b0;
-  margin-top: 10px;
-}
 
 .quick-actions {
   display: grid;
@@ -56,19 +55,18 @@
 }
 
 .quick-actions button {
-  background: var(--secondary-color);
+  background: var(--accent-color);
   color: var(--text-color);
-  border: none;
-  padding: 15px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
+  padding: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out, background 0.2s;
 }
 
-.quick-actions button:hover:not(:disabled) {
-  background: var(--accent-color);
-  transform: translateY(-2px);
+.quick-actions button:hover {
+  transform: translateY(-3px);
+  background: var(--secondary-color);
 }
+
 
 .quick-actions button:disabled {
   opacity: 0.5;
@@ -93,7 +91,7 @@
   word-wrap:break-word;
 }
 
-.user-message {
+/* .user-message {
   background: rgb(8, 110, 133);
   color: white;
   margin-left: auto;
@@ -102,7 +100,36 @@
 .ai-message {
   background: var(--message-color-ai);
   color: #1c3a38;
+} */
+
+.user-message {
+  background: var(--message-color-user);
+  color: var(--text-color);
+  border-radius: 15px 15px 0 15px;
 }
+
+.ai-message {
+  background: var(--message-color-ai);
+  color: #035c2c;
+  border-radius: 15px 15px 15px 0;
+}
+
+
+.ai-message h2 {
+  font-size: 18px;
+  color: var(--text-color);
+}
+
+.ai-message ul {
+  margin: 10px;
+  padding-left: 20px;
+}
+
+.ai-message li {
+  margin-bottom: 5px;
+  color: #035c2c;
+}
+
 
 .input-container {
   display: flex;
@@ -141,13 +168,40 @@
 }
 
 .input-container button:hover:not(:disabled) {
-  background: #4f6f6d; /* Slightly darker tone */
+  background: var(--secondary-color); /* Slightly darker tone */
 }
 
 .input-container button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.send-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color); 
+  /* border-radius: 50%; Circular shape */
+  padding: 10px; 
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background 0.2s;
+}
+
+.send-button-container:hover:not(:disabled) {
+  transform: scale(1.1); /* Slight zoom on hover */
+  background: #4f6f6d; /* Darker tone on hover */
+}
+
+.send-button-container:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.send-button-icon {
+  font-size: 40px; /* Increase the size of the arrow */
+  color: var(--text-color); /* Keep the arrow visible */
+}
+
 
 .loading-dots {
   display: flex;
