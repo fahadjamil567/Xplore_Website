@@ -103,6 +103,21 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return self.user
+    
+
+
+class ChatMessage(models.Model):
+    email = models.EmailField()  # Store the email of the user who sent the message
+    message = models.TextField()  # The chat message content
+    time = models.CharField(max_length=10)  # Time when the message was sent (formatted as a string, e.g., "2:40:22 AM")
+    created_at = models.DateTimeField(auto_now_add=True)  # Timestamp when the message was created
+
+    def __str__(self):
+        return self.email
+    
+    class Meta:
+        ordering = ['created_at']  # Order messages by the creation time
+
 
 """
     

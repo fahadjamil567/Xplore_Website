@@ -6,9 +6,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, viewsets
 from django.contrib.auth.hashers import make_password, check_password
-from .models import User, Booking, Wishlist, Destination
-from .serializers import UserSerializer, BookingSerializer, BookingStatusUpdateSerializer, DestinationSerializer, WishlistSerializer
-import requests
+from .models import User, Booking, Wishlist, Destination, ChatMessage
+from .serializers import UserSerializer, BookingSerializer, DestinationSerializer, WishlistSerializer, ChatMessageSerializer
 from django.conf import settings
 from datetime import datetime
 import os
@@ -175,7 +174,7 @@ class AddBookingView(APIView):
         tickets = request.data.get('Tickets')  # Number of tickets
         price_per_head = request.data.get('PricePerHead')  # Price per ticket (Price per head)
 
-        print(request.data)
+        
         
         try:
             # Fetch user by email
@@ -192,7 +191,7 @@ class AddBookingView(APIView):
 
         # Calculate the total price (Price = Ticket count * Price per head)
         total_price = price_per_head * tickets
-        print(f"Calculated Total Price: {total_price}")
+        
 
         # Convert total_price back to string if needed
         total_price_str = str(total_price)
@@ -216,7 +215,7 @@ class AddBookingView(APIView):
         if serializer.is_valid():
             # Save the booking and return the serialized data as a response
             booking = serializer.save()
-            print(f"Assigned BookingId: {booking.BookingId}")
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)  # Use 201 for created status
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -225,7 +224,7 @@ class AddBookingView(APIView):
 @api_view(['GET'])
 def get_user_bookings(request):
     email = request.GET.get('username')  # Fetch username from query params
-    print(email)
+    
     if not email:
         return Response({'error': 'Username is required'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -252,7 +251,7 @@ class BookingListView(APIView):
 # Update Booking Status
 class UpdateBookingStatusView(APIView):
     def patch(self, request, booking_id):
-        print(request)
+        
         try:
             booking = Booking.objects.get(pk=booking_id)
         except Booking.DoesNotExist:
@@ -262,7 +261,7 @@ class UpdateBookingStatusView(APIView):
             return Response({"error": "Only pending bookings can be updated."}, status=status.HTTP_400_BAD_REQUEST)
 
         new_status = request.data.get("Status")
-        print(new_status)
+        
         if new_status not in ["Confirmed", "Canceled"]:
             return Response({"error": "Invalid status"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -280,7 +279,7 @@ class DestinationListView(APIView):
 
 class DestinationDetailView(APIView):
     def get(self, request, DestinationId, format=None):
-        print("HELLO")
+       
         try:
             
             destination = Destination.objects.get(DestinationId=DestinationId)  # Fetch the destination by ID
@@ -404,7 +403,7 @@ from datetime import datetime
 class WishlistView(APIView):
     def get(self, request):
         user_email = request.query_params.get('user')
-        print(user_email)
+        
         user_wishlist = Wishlist.objects.filter(user=user_email) 
         serializer = WishlistSerializer(user_wishlist, many=True)
         
@@ -440,8 +439,7 @@ class WishlistView(APIView):
 def check_wishlist(request):
     user_email = request.query_params.get('user')
     destination_id = request.query_params.get('destination')
-    print(user_email)
-    print(destination_id)
+    
     
     is_in_wishlist = Wishlist.objects.filter(user=user_email, des=destination_id).exists()
     if is_in_wishlist:
@@ -470,6 +468,54 @@ model = genai.GenerativeModel(
     model_name="gemini-1.5-flash-8b",
     generation_config=generation_config,
 )
+
+class SaveChatMessageView(APIView):
+    def post(self, request):
+        try:
+            
+            email = request.data.get('email')
+            message = request.data.get('message')
+            time = request.data.get('time')
+            
+
+            if not email or not message or not time:
+                return JsonResponse({"error": "Missing required fields"}, status=400)
+
+            # Create and save the new chat message
+            chat_message = ChatMessage.objects.create(
+                email=email,
+                message=message,
+                time=time
+            )
+
+            return JsonResponse({"message": "Message saved successfully"}, status=201)
+        
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+        
+
+
+class FetchChatMessagesView(APIView):
+    def get(self, request):
+        try:
+            
+            messages = ChatMessage.objects.all().order_by('created_at')
+            
+            message_data = [
+                {
+                    'email': message.email,
+                    'message': message.message,
+                    'time': message.time,
+                    'created_at': message.created_at.strftime("%Y-%m-%d %H:%M:%S")  # Format the timestamp for display
+                }
+                for message in messages
+            ]
+            
+            return JsonResponse({"messages": message_data}, status=200)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
 
 """
 

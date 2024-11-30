@@ -16,6 +16,8 @@ from .views import (
     DestinationDetailView,
     WishlistView,
     chat_view,
+    SaveChatMessageView,
+    FetchChatMessagesView,
     #GeminiAIView,
 
 
@@ -34,7 +36,9 @@ urlpatterns = [
     path('weather/', WeatherForecastView.as_view(), name='weather-forecast'),
     #path('ask/', GeminiAIView.as_view(), name='ask_open_gemini'),
     path("chat/", chat_view, name="chat_view"),
-
+    path('save-chat-message/', SaveChatMessageView.as_view(), name='save-chat-message'),
+    path('fetch-messages/', FetchChatMessagesView.as_view(), name='fetch-chat-messages'),
+    
     path('destinations/', DestinationListView.as_view(), name='destination-list'),  # GET: list all destinations
     path('destinations/add/', DestinationCreateView.as_view(), name='destination-create'),  # POST: create a new destination
     path('destinations/delete/<int:pk>/', DestinationDeleteView.as_view(), name='destination-delete'),  # DELETE: delete a destination by ID
