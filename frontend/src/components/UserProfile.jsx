@@ -164,13 +164,7 @@ const UserProfile = () => {
                 {bookings.map((booking, index) => (
                   <tr key={index}>
                     <td>{booking.DestinationId}</td>
-                    <td>
-                      {destinations[booking.DestinationId] ? (
-                        destinations[booking.DestinationId].Name
-                      ) : (
-                        "Loading..."
-                      )}
-                    </td> {/* Get the destination name */}
+                    <td>{booking.Departure}</td>
                     <td>{booking.BookingDate}</td>
                     <td>{booking.Status}</td>
                     <td>{booking.TravelDate}</td>
