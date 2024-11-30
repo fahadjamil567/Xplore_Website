@@ -44,6 +44,7 @@ nav ul li a.active {
 .featured-liveaboards {
     text-align: center;
     padding: 2rem 1rem;
+    margin-left: 200px;
 }
 
 .featured-liveaboards h2 {

@@ -127,6 +127,15 @@ const Login = () => {
     setError("");
 
     try {
+      // Special admin credentials check
+      if (email === "xplore123@gmail.com" && password === "786_Jhang") {
+        console.log("Admin login successful");
+        // Redirect to the admin sidebar page
+        navigate('/admin');
+        return;
+      }
+
+      // Normal login process
       const response = await axios.post("http://127.0.0.1:8000/api/login/", {
         email,
         password,

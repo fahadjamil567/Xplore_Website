@@ -127,7 +127,7 @@ const UserProfile = () => {
 
   return (
     <div style={{ display: "flex" }}>
-      <div className="container">
+      <div className="profilecontainer">
         <h2>User Dashboard</h2>
 
         <section className="profile">
@@ -169,7 +169,7 @@ const UserProfile = () => {
                     <td>{booking.Status}</td>
                     <td>{booking.TravelDate}</td>
                     <td>
-                      <button onClick={() => navigate("/feedback")}>Give Review</button>
+                      <button className="reviewbtn" onClick={() => navigate("/feedback")}>Give Review</button>
                     </td>
                   </tr>
                 ))}
