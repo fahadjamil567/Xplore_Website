@@ -20,7 +20,7 @@ const teamMembers = [
     {
         name: "Momin Shahzad",
         image: "/images/momin.jpg",
-        quote: "Tries to be funny, but isn't. Momin is dedicated to making every moment forgettable."
+        quote: "Tries to be funny, but isn't. Momin is dedicated to making every moment forgettable.Hate is real"
     },
     {
         name: "Faiza Fatima",
