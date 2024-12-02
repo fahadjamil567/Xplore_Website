@@ -5,7 +5,7 @@ const teamMembers = [
     {
         name: "Muhammad Taahaa",
         image: "/images/f2.jpeg",
-        quote: "Your guide to unforgettable journeys. Muhammad blends cultural insights with travel expertise, ensuring every traveler enjoys a rich, immersive experience."
+        quote: "Your guideeeee to unforgettable journeys. Muhammad blends cultural insights with travel expertise, ensuring every traveler enjoys a rich, immersive experience."
     },
     {
         name: "Ali Abbas",
