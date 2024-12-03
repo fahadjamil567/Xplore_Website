@@ -10,6 +10,7 @@ const Feedback = () => {
   const [message, setMessage] = useState('');
   const [rating, setRating] = useState('');
   const [destinationId, setDestinationId] = useState('');
+  const [destinationName, setDestinationName] = useState('');
   const [destinations, setDestinations] = useState([]);
   const [loadingName, setLoadingName] = useState(true);
 
@@ -61,6 +62,27 @@ const Feedback = () => {
     fetchDestinations();
     fetchUserData();
   }, []);
+
+  const fetchDestinationName = async (destinationId) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/destinations/${destinationId}/`);
+      if (!response.ok) throw new Error('Failed to fetch destination');
+      const data = await response.json();
+      setDestinationName(data.Name); // Set the destination name from the response
+    } catch (error) {
+      console.error('Error fetching destination:', error);
+    }
+  };
+
+  const handleDestinationChange = (e) => {
+    const selectedId = e.target.value;
+    setDestinationId(selectedId);
+    if (selectedId) {
+      fetchDestinationName(selectedId); // Fetch the destination name when a new destination is selected
+    } else {
+      setDestinationName(''); // Reset the destination name if no destination is selected
+    }
+  };
 
   const validateForm = () => {
     if (!name || !email || !message || !rating || !destinationId) {
@@ -133,7 +155,7 @@ const Feedback = () => {
             <select
               id="destination"
               value={destinationId}
-              onChange={(e) => setDestinationId(e.target.value)}
+              onChange={handleDestinationChange}
               required
             >
               <option value="">Select a destination</option>
@@ -190,6 +212,9 @@ const Feedback = () => {
           {reviews.map((review, index) => (
             <div key={index} className="review-card">
               <h3>{review.email}</h3>
+              <p>
+                <strong>Destination</strong> {review.destinationId}
+              </p>
               <p>
                 <strong>Rating:</strong> {review.rating} ⭐
               </p>

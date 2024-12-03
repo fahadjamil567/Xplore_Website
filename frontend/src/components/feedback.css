@@ -55,26 +55,32 @@
   
   .feedback-rating {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end; /* Align stars to the right */
+    flex-direction: row-reverse; /* Reverse the order of stars */
     gap: 5px;
   }
   
   .feedback-rating input {
-    display: none;
+    display: none; /* Hide the radio inputs */
   }
   
   .feedback-rating label {
     font-size: 24px;
     cursor: pointer;
-    color: #ccc;
+    color: #ccc; /* Default star color */
     transition: color 0.3s ease-in-out;
   }
   
   .feedback-rating input:checked ~ label,
   .feedback-rating label:hover,
   .feedback-rating label:hover ~ label {
-    color: gold;
+    color: #ccc; /* Reset all to default color */
+  }
+  
+  .feedback-rating label:hover,
+  .feedback-rating label:hover ~ label,
+  .feedback-rating input:checked ~ label {
+    color: gold; /* Highlight stars in gold */
   }
   
   .feedback-btn {

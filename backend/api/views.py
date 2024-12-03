@@ -516,11 +516,9 @@ def chat_view(request):
 class FeedbackSubmitView(APIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email')  
-
- 
         if not Booking.objects.filter(UserEmail=email).exists():  
             return Response({"error": "No booking found for this email."}, status=status.HTTP_400_BAD_REQUEST)
-
+        
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
