@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './Review.css';
+import './feedback.css';
 
 const Feedback = () => {
+  const [reviews, setReviews] = useState([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
+  
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -10,7 +13,21 @@ const Feedback = () => {
   const [destinations, setDestinations] = useState([]);
   const [loadingName, setLoadingName] = useState(true); // Track if the name is loading
 
+  // Fetch all reviews
   useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/feedback/view/'); // Updated API endpoint
+        if (!response.ok) throw new Error('Failed to fetch reviews');
+        const data = await response.json();
+        setReviews(data);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      } finally {
+        setLoadingReviews(false);
+      }
+    };
+
     // Fetch destinations
     const fetchDestinations = async () => {
       try {
@@ -27,7 +44,7 @@ const Feedback = () => {
     const fetchUserData = async () => {
       const loggedInEmail = localStorage.getItem("userEmail");
       if (loggedInEmail) {
-        setEmail(loggedInEmail); 
+        setEmail(loggedInEmail);
         try {
           const response = await fetch(`http://127.0.0.1:8000/api/user-profile/?email=${loggedInEmail}`);
           if (!response.ok) throw new Error('Failed to fetch user data');
@@ -41,6 +58,7 @@ const Feedback = () => {
       }
     };
 
+    fetchReviews();
     fetchDestinations();
     fetchUserData();
   }, []);
@@ -79,6 +97,7 @@ const Feedback = () => {
       setDestinationId('');
       setMessage('');
       setRating('');
+      
     } catch (error) {
       console.error(error);
       alert('Error submitting feedback. Please try again.');
@@ -86,29 +105,11 @@ const Feedback = () => {
   };
 
   return (
-    <div className="feedback-body">
-      <header>
-        <nav>
-          <ul>
-            <li><a href="Home">Home</a></li>
-            <li><a href="tours">Tours</a></li>
-            <li><a href="Trek">Treks</a></li>
-            <li><a href="Faqs">FAQs</a></li>
-            <li><a href="UserProfile">Profile</a></li>
-            <li><a href="AboutUs">About Us</a></li>
-          </ul>
-        </nav>
-      </header>
-
-      {/* Displaying Full Name */}
-      <div className="user-name">
-        {loadingName ? <h3>Loading...</h3> : <h3>Welcome, {name}!</h3>}
-      </div>
-
+    <div className="feedback-and-reviews-body">
+      {/* Feedback Form */}
       <div className="feedback-container">
         <h2>Feedback Form</h2>
         <form onSubmit={handleSubmit}>
-          {/* Full Name */}
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
             <input
@@ -120,7 +121,6 @@ const Feedback = () => {
             />
           </div>
 
-          {/* Email */}
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -133,7 +133,6 @@ const Feedback = () => {
             />
           </div>
 
-          {/* Select Destination */}
           <div className="form-group">
             <label htmlFor="destination">Select Destination</label>
             <select
@@ -155,7 +154,6 @@ const Feedback = () => {
             </select>
           </div>
 
-          {/* Message */}
           <div className="form-group">
             <label htmlFor="message">Message</label>
             <textarea
@@ -167,7 +165,6 @@ const Feedback = () => {
             />
           </div>
 
-          {/* Rating */}
           <div className="form-group">
             <label>Rating</label>
             <div className="rating">
@@ -190,6 +187,35 @@ const Feedback = () => {
 
           <button type="submit" className="btn">Send Feedback</button>
         </form>
+      </div>
+
+      {/* Display Full Name */}
+      <div className="user-name">
+        {loadingName ? <h3>Loading...</h3> : <h3>Welcome, {name}!</h3>}
+      </div>
+
+      {/* Display All Reviews */}
+      <div className="all-reviews-container">
+        <h2>User Reviews</h2>
+        {loadingReviews ? (
+          <p>Loading reviews...</p>
+        ) : reviews.length === 0 ? (
+          <p>No reviews available.</p>
+        ) : (
+          <div className="reviews-list">
+            {reviews.map((review, index) => (
+              <div key={index} className="review-card">
+                <h3>{review.email}</h3>
+                <p>
+                  <strong>Rating:</strong> {review.rating} ⭐
+                </p>
+                <p>
+                  <strong>Message:</strong> {review.message}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

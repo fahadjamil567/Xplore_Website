@@ -1,110 +1,117 @@
-body {
-    /* background-image: url("/images/t3.jpg"); */
-    background-size: cover;
-    background-position: center;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f4f4;
-}
-
-.rev-container {
-    width: 100%;
-    max-width: 800px; /* Restrict max width for the container */
-    margin: 0 auto;
-    margin-top: 100px;
-    margin-bottom: 40px;
+.feedback-and-reviews-body {
     padding: 20px;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px; /* Optional rounded corners */
-}
-
-.rev-form-group {
+  }
+  
+  .feedback-container {
+    margin-bottom: 30px;
+  }
+  
+  .feedback-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
     margin-bottom: 15px;
-    width: 100%; /* Ensure it spans full width within the container */
-}
-
-label {
-    display: block; /* Ensure labels are block-level */
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    display: block;
     margin-bottom: 5px;
-    font-size: 16px;
-    font-weight: bold; /* Make labels stand out */
-}
-
-input[type="text"], input[type="email"], select, textarea {
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    box-sizing: border-box; /* Ensure padding is included in width */
-    margin-bottom: 10px; /* Add spacing below inputs */
-}
-
-textarea {
-    resize: vertical; /* Allow vertical resizing */
-    min-height: 100px; /* Minimum height for better usability */
-}
-
-.rating {
+  }
+  
+  .form-group textarea {
+    resize: vertical;
+  }
+  
+  .rating {
     display: flex;
-    justify-content: center; /* Center the rating stars */
-    flex-direction: row-reverse;
     gap: 5px;
-}
-
-.rating input {
+  }
+  
+  .rating input {
     display: none;
-}
-
-.rating label {
-    font-size: 2em;
-    color: #ccc;
+  }
+  
+  .rating label {
+    font-size: 24px;
     cursor: pointer;
-}
-
-.rating input:checked ~ label {
-    color: #f0ad4e;
-}
-
-.rating input:hover ~ label {
-    color: #f0ad4e;
-}
-
-.rev-btn {
+  }
+  
+  .rating input:checked ~ label {
+    color: gold;
+  }
+  
+  button.btn {
+    padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
-    padding: 12px 20px;
-    margin-top: 20px;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-    width: 100%; /* Button takes full width of its container */
     font-size: 16px;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}
-
-.rev-btn:hover {
+    cursor: pointer;
+  }
+  
+  button.btn:hover {
     background-color: #45a049;
-}
-
-.reviews {
-    margin-top: 30px;
-}
-
-.review {
-    background: #e9e9e9;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.review h4 {
-    margin: 0;
-}
-
-.review small {
-    color: #777;
-    font-size: 14px;
-}
+  }
+  
+  /* User Name Styling */
+  .user-name h3 {
+    font-size: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Reviews Section */
+  .all-reviews-container {
+    margin-top: 40px;
+  }
+  
+  .all-reviews-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .reviews-list {
+    display: flex;
+    flex-direction: column; /* Arrange reviews vertically */
+    gap: 20px; /* Space between review cards */
+  }
+  
+  .review-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+  }
+  
+  .review-card h3 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .review-card p {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  .review-card strong {
+    font-weight: bold;
+  }
+  
+  .review-card .star-rating {
+    color: gold;
+  }
+  
