@@ -4,7 +4,7 @@ import './aboutus.css';
 const teamMembers = [ 
     {
         name: "Muhammad Taahaa",
-        image: "/images/f2.jpeg",
+        image: "/images/f2.jpg",
         quote: "Your guideeeee to unforgettable journeys. Muhammad blends cultural insights with travel expertise, ensuring every traveler enjoys a rich, immersive experience."
     },
     {
@@ -32,7 +32,7 @@ const teamMembers = [
 const AboutUs = () => {
     return (
         <div className="about-us-container">
-            <h1>Our Team</h1>
+            <h1>Bunch of Xplorers</h1>
             <p className="intro-text">Xplore is dedicated to providing the best hiking tours and travel experiences. Our expert guides and 24/7 customer support ensure your adventure is safe, enjoyable, and unforgettable.</p>
             <div className="team-grid">
                 {teamMembers.map((member, index) => (
