@@ -1,8 +1,16 @@
-.all-reviews-container {
+ .all-reviews-container {
     padding: 20px;
     display: flex;
+    background-image: url('/public/images/t5.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Ensure it covers the whole page */
     flex-direction: column;
     align-items: center;
+    background-color: rgba(255, 255, 255, 0.183); /* Optional: Add some transparency to the container */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for a better contrast */
   }
   
   .feedback-form-container {
@@ -14,7 +22,7 @@
     font-size: 24px;
     margin-bottom: 20px;
     text-align: center;
-    color: #333;
+    color: #fefffe;
   }
   
   .feedback-form-group {
@@ -26,7 +34,7 @@
   .feedback-form-group label {
     font-weight: bold;
     margin-bottom: 5px;
-    color: #555;
+    color: #ffffff;
   }
   
   .feedback-form-group input,
@@ -72,15 +80,9 @@
   }
   
   .feedback-rating input:checked ~ label,
-  .feedback-rating label:hover,
-  .feedback-rating label:hover ~ label {
-    color: #ccc; /* Reset all to default color */
-  }
-  
-  .feedback-rating label:hover,
-  .feedback-rating label:hover ~ label,
-  .feedback-rating input:checked ~ label {
-    color: gold; /* Highlight stars in gold */
+  .feedback-rating label:hover + label,
+  .feedback-rating label:hover + label {
+      color: gold;
   }
   
   .feedback-btn {

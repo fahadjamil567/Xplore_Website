@@ -12,7 +12,7 @@ const BookingPage = () => {
     loggedInEmail: loggedInEmail || '',
     numberOfPeople: 1,
     specialRequests: '',
-    travelDate: startDate || '', // Use startDate from state if available
+    travelDate: startDate || '',
   });
 
   const [loading, setLoading] = useState(true);
@@ -68,20 +68,20 @@ const BookingPage = () => {
       loggedInEmail: formData.loggedInEmail,
       numTickets: formData.numberOfPeople,
       specialRequests: formData.specialRequests,
-      startDate: formData.travelDate, // Use travelDate as startDate
+      startDate: formData.travelDate,
     };
 
     sessionStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
 
     navigate('/payment', {
       state: {
-        bookingDetails, // Passing bookingDetails object to payment page
+        bookingDetails,
         title,
         location,
         price: parseFloat(price),
         image,
         loggedInEmail,
-        travelDate: formData.travelDate, // Pass travelDate to payment page
+        travelDate: formData.travelDate,
         DestinationId,
       },
     });
@@ -101,7 +101,7 @@ const BookingPage = () => {
         {error && <p>{error}</p>}
 
         <form onSubmit={handleBooking} className="booking-form">
-          <div className="form-group">
+          <div className="booking-page-form-group name">
             <label htmlFor="name">Full Name:</label>
             <input
               type="text"
@@ -112,7 +112,7 @@ const BookingPage = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="booking-page-form-group email">
             <label htmlFor="loggedInEmail">Email:</label>
             <input
               type="email"
@@ -124,7 +124,7 @@ const BookingPage = () => {
               disabled
             />
           </div>
-          <div className="form-group">
+          <div className="booking-page-form-group people">
             <label htmlFor="numberOfPeople">Number of People:</label>
             <input
               type="number"
@@ -135,12 +135,12 @@ const BookingPage = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="booking-page-form-group travel-date">
             <label htmlFor="travelDate">Travel Date:</label>
             <input
               type="date"
-              id="travelDate" // Use travelDate here
-              name="travelDate" // Also update the name attribute to "travelDate"
+              id="travelDate"
+              name="travelDate"
               value={formData.travelDate}
               onChange={handleInputChange}
               required
