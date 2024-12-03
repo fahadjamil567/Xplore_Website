@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Import your components
+import AllReviews from './components/ViewReviews.jsx';
 import Header from './components/header.jsx';
 import Footer from './components/footer.jsx';
 import Login from './components/login.jsx';
@@ -116,6 +117,14 @@ const App = () => {
           element={
             <UserLayout>
               <Feedback />
+            </UserLayout>
+          }
+        />
+        <Route
+          path="/allreviews"
+          element={
+            <UserLayout>
+              <AllReviews />
             </UserLayout>
           }
         />

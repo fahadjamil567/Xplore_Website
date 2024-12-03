@@ -530,6 +530,15 @@ class FeedbackSubmitView(APIView):
     
 
 
+class FeedbackView(APIView):
+    def get(self, request):
+        feedbacks = Feedback.objects.all().values('email', 'rating', 'message')
+        feedback_list = list(feedbacks)
+        return JsonResponse(feedback_list, safe=False)
+
+    
+
+
 def get_dashboard_counts(request):
     user_count = User.objects.count()
     booking_count = Booking.objects.count()
