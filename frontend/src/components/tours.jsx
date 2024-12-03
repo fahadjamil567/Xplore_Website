@@ -121,7 +121,7 @@ const Tours = () => {
                 <h3>{destination.Name}</h3>
                 <p>{destination.Location}</p>
                 <p>from {destination.Price} / day</p>
-                <p>{destination.rating || 'N/A'} ({destination.reviews || 0} Reviews)</p>
+                {/* <p>{destination.rating || 'N/A'} ({destination.reviews || 0} Reviews)</p> */}
 
                 <div className="overlay">
                   <button className="book-now" onClick={() => handleBookNow(destination)}>
