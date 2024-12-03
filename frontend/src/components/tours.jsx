@@ -26,6 +26,7 @@ const Tours = () => {
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedInEmail, destinations]);
 
   // Check if the destination is in the wishlist for the logged-in user
@@ -116,7 +117,7 @@ const Tours = () => {
               <div key={destination.DestinationId} className="card">
                 <img
                   src={`http://127.0.0.1:8000${destination.Image}`}
-                  alt={`Image of ${destination.Name}`}
+                  alt={`${destination.Name}`}
                 />
                 <h3>{destination.Name}</h3>
                 <p>{destination.Location}</p>
