@@ -14,7 +14,7 @@ body {
 
 .about-us-container {
     max-width: 1500px;
-    margin: 0 auto;
+    margin-left: 140px;
     padding: 20px;
     text-align: center;
 }
