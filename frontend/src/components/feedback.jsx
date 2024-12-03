@@ -4,20 +4,19 @@ import './feedback.css';
 const Feedback = () => {
   const [reviews, setReviews] = useState([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
-  
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [rating, setRating] = useState('');
   const [destinationId, setDestinationId] = useState('');
   const [destinations, setDestinations] = useState([]);
-  const [loadingName, setLoadingName] = useState(true); // Track if the name is loading
+  const [loadingName, setLoadingName] = useState(true);
 
-  // Fetch all reviews
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/feedback/view/'); // Updated API endpoint
+        const response = await fetch('http://127.0.0.1:8000/api/feedback/view/');
         if (!response.ok) throw new Error('Failed to fetch reviews');
         const data = await response.json();
         setReviews(data);
@@ -28,7 +27,6 @@ const Feedback = () => {
       }
     };
 
-    // Fetch destinations
     const fetchDestinations = async () => {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/destinations/');
@@ -40,20 +38,21 @@ const Feedback = () => {
       }
     };
 
-    // Fetch user data based on logged-in email
     const fetchUserData = async () => {
-      const loggedInEmail = localStorage.getItem("userEmail");
+      const loggedInEmail = localStorage.getItem('userEmail');
       if (loggedInEmail) {
         setEmail(loggedInEmail);
         try {
-          const response = await fetch(`http://127.0.0.1:8000/api/user-profile/?email=${loggedInEmail}`);
+          const response = await fetch(
+            `http://127.0.0.1:8000/api/user-profile/?email=${loggedInEmail}`
+          );
           if (!response.ok) throw new Error('Failed to fetch user data');
           const userData = await response.json();
-          setName(userData.email);  // Set name from fetched user data
+          setName(userData.email);
         } catch (error) {
           console.error(error);
         } finally {
-          setLoadingName(false); // Stop loading once data is fetched
+          setLoadingName(false);
         }
       }
     };
@@ -97,7 +96,6 @@ const Feedback = () => {
       setDestinationId('');
       setMessage('');
       setRating('');
-      
     } catch (error) {
       console.error(error);
       alert('Error submitting feedback. Please try again.');
@@ -105,12 +103,11 @@ const Feedback = () => {
   };
 
   return (
-    <div className="feedback-and-reviews-body">
-      {/* Feedback Form */}
-      <div className="feedback-container">
+    <div className="all-reviews-container">
+      <div className="feedback-form-container">
         <h2>Feedback Form</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="feedback-form-group">
             <label htmlFor="name">Full Name</label>
             <input
               type="text"
@@ -120,8 +117,7 @@ const Feedback = () => {
               required
             />
           </div>
-
-          <div className="form-group">
+          <div className="feedback-form-group">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -129,11 +125,10 @@ const Feedback = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              disabled 
+              disabled
             />
           </div>
-
-          <div className="form-group">
+          <div className="feedback-form-group">
             <label htmlFor="destination">Select Destination</label>
             <select
               id="destination"
@@ -153,8 +148,7 @@ const Feedback = () => {
               )}
             </select>
           </div>
-
-          <div className="form-group">
+          <div className="feedback-form-group">
             <label htmlFor="message">Message</label>
             <textarea
               id="message"
@@ -164,10 +158,9 @@ const Feedback = () => {
               required
             />
           </div>
-
-          <div className="form-group">
+          <div className="feedback-form-group">
             <label>Rating</label>
-            <div className="rating">
+            <div className="feedback-rating">
               {[5, 4, 3, 2, 1].map((star) => (
                 <React.Fragment key={star}>
                   <input
@@ -184,39 +177,29 @@ const Feedback = () => {
               ))}
             </div>
           </div>
-
-          <button type="submit" className="btn">Send Feedback</button>
+          <button type="submit" className="feedback-btn">
+            Submit Feedback
+          </button>
         </form>
       </div>
-
-      {/* Display Full Name */}
-      <div className="user-name">
-        {loadingName ? <h3>Loading...</h3> : <h3>Welcome, {name}!</h3>}
-      </div>
-
-      {/* Display All Reviews */}
-      <div className="all-reviews-container">
-        <h2>User Reviews</h2>
-        {loadingReviews ? (
-          <p>Loading reviews...</p>
-        ) : reviews.length === 0 ? (
-          <p>No reviews available.</p>
-        ) : (
-          <div className="reviews-list">
-            {reviews.map((review, index) => (
-              <div key={index} className="review-card">
-                <h3>{review.email}</h3>
-                <p>
-                  <strong>Rating:</strong> {review.rating} ⭐
-                </p>
-                <p>
-                  <strong>Message:</strong> {review.message}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      <h2>User Reviews</h2>
+      {reviews.length === 0 ? (
+        <p>No reviews available.</p>
+      ) : (
+        <div className="reviews-list">
+          {reviews.map((review, index) => (
+            <div key={index} className="review-card">
+              <h3>{review.email}</h3>
+              <p>
+                <strong>Rating:</strong> {review.rating} ⭐
+              </p>
+              <p>
+                <strong>Message:</strong> {review.message}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
