@@ -6,8 +6,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, viewsets
 from django.contrib.auth.hashers import make_password, check_password
-from .models import User, Booking, Wishlist, Destination, ChatMessage
-from .serializers import UserSerializer, BookingSerializer, DestinationSerializer, WishlistSerializer, ChatMessageSerializer
+from .models import User, Booking, Wishlist, Destination, ChatMessage, Feedback
+from .serializers import UserSerializer, BookingSerializer, DestinationSerializer, WishlistSerializer, ChatMessageSerializer,FeedbackSerializer
 from django.conf import settings
 from datetime import datetime
 import requests
@@ -373,36 +373,6 @@ from rest_framework import status
 from .models import Destination
 from datetime import datetime
 
-# Fetch Departure Dates Based on Destination
-# @api_view(['GET'])
-# def get_departure_dates(request):
-#     destination_id = request.GET.get('destination_id')
-    
-#     if not destination_id:
-#         return Response({'error': 'Destination ID is required'}, status=status.HTTP_400_BAD_REQUEST)
-    
-#     try:
-#         destination = Destination.objects.get(id=destination_id)
-        
-#         # Fetch tours that are related to this destination
-#         tours = Tour.objects.filter(destination=destination)
-        
-#         if not tours.exists():
-#             return Response({'error': 'No tours found for the selected destination'}, status=status.HTTP_404_NOT_FOUND)
-        
-#         # Prepare the departure dates for each tour
-#         departure_dates = []
-#         for tour in tours:
-#             if tour.departure_date:
-#                 departure_dates.append(tour.departure_date.strftime('%Y-%m-%d'))
-        
-#         if not departure_dates:
-#             return Response({'error': 'No departure dates available for the selected destination'}, status=status.HTTP_404_NOT_FOUND)
-
-#         return Response({'departure_dates': departure_dates}, status=status.HTTP_200_OK)
-    
-#     except Destination.DoesNotExist:
-#         return Response({'error': 'Destination not found'}, status=status.HTTP_404_NOT_FOUND)
 
 class WishlistView(APIView):
     def get(self, request):
@@ -521,36 +491,6 @@ class FetchChatMessagesView(APIView):
             return JsonResponse({"error": str(e)}, status=500)
 
 
-"""
-
-def chat_view(request):
-    if request.method == "POST":
-        print("yae")
-        try:
-            print("hello")
-            # Parse the JSON body
-            
-            user_message = request.data.get("message", "").strip()
-
-            if not user_message:
-                return JsonResponse({"error": "Message is required."}, status=400)
-
-            # Start a chat session with the model
-            chat_session = model.start_chat(history=[])
-            response =  user_message
-            #chat_session.send_message(user_message)
-
-            if response:
-                return JsonResponse({"response": response.text}, status=200)
-            else:
-                return JsonResponse({"error": "No response from Gemini AI."}, status=500)
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
-    else:
-        return JsonResponse({"error": "Invalid request method."}, status=405)
-"""
-
-
 @api_view(['POST'])
 def chat_view(request):
     if request.method == 'POST':
@@ -571,3 +511,39 @@ def chat_view(request):
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
     return JsonResponse({"error": "Invalid request method."}, status=405)
+
+
+class FeedbackSubmitView(APIView):
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email')  
+
+ 
+        if not Booking.objects.filter(UserEmail=email).exists():  
+            return Response({"error": "No booking found for this email."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = FeedbackSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Feedback submitted successfully!"}, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+def get_dashboard_counts(request):
+    user_count = User.objects.count()
+    booking_count = Booking.objects.count()
+    destination_count = Destination.objects.count()
+    query_count = Wishlist.objects.count()  # Assuming queries are stored in ChatMessage
+    rating_count = Feedback.objects.count()
+
+    # Return the counts as JSON
+    data = {
+        'total_users': user_count,
+        'total_bookings': booking_count,
+        'total_tours': destination_count,
+        'total_destinations': destination_count,
+        'total_queries': query_count,
+        'total_ratings': rating_count
+    }
+    return JsonResponse(data)

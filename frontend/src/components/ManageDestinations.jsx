@@ -112,6 +112,7 @@ const ManageDestinations = () => {
                                     <tr key={destination.DestinationId}>
                                         <td>{destination.DestinationId}</td>
                                         <td>{destination.Name}</td>
+                                        
                                         <td>{destination.Region}</td>
                                         <td>{destination.Location}</td>
                                         <td>{destination.Price}</td>
