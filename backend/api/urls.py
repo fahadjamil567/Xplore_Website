@@ -19,6 +19,7 @@ from .views import (
     SaveChatMessageView,
     FetchChatMessagesView,
     FeedbackSubmitView,
+    get_dashboard_counts,
 
 
 
@@ -49,6 +50,7 @@ urlpatterns = [
     path('wishlist/check/', views.check_wishlist, name='check_wishlist'),
 
     path('feedback/', FeedbackSubmitView.as_view(), name='feedback_submit'),
-
+    path('dashboard-counts/', get_dashboard_counts, name='dashboard_counts'),
 ]
+
 

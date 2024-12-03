@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, viewsets
 from django.contrib.auth.hashers import make_password, check_password
-from .models import User, Booking, Wishlist, Destination, ChatMessage
+from .models import User, Booking, Wishlist, Destination, ChatMessage, Feedback
 from .serializers import UserSerializer, BookingSerializer, DestinationSerializer, WishlistSerializer, ChatMessageSerializer,FeedbackSerializer
 from django.conf import settings
 from datetime import datetime
@@ -527,3 +527,23 @@ class FeedbackSubmitView(APIView):
             return Response({"message": "Feedback submitted successfully!"}, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+def get_dashboard_counts(request):
+    user_count = User.objects.count()
+    booking_count = Booking.objects.count()
+    destination_count = Destination.objects.count()
+    query_count = Wishlist.objects.count()  # Assuming queries are stored in ChatMessage
+    rating_count = Feedback.objects.count()
+
+    # Return the counts as JSON
+    data = {
+        'total_users': user_count,
+        'total_bookings': booking_count,
+        'total_tours': destination_count,
+        'total_destinations': destination_count,
+        'total_queries': query_count,
+        'total_ratings': rating_count
+    }
+    return JsonResponse(data)
