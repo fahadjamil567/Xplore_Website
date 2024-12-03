@@ -136,6 +136,12 @@ class ChatRoom extends Component {
             placeholder="Type your message..."
             value={newMessage}
             onChange={(e) => this.setState({ newMessage: e.target.value })}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault(); // Prevent default action like form submission
+                this.handleSendMessage();
+              }
+            }}
           />
           <button onClick={this.handleSendMessage}>Send</button>
         </div>

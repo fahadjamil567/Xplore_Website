@@ -10,11 +10,12 @@ body {
     background-position: center; 
     padding-bottom: 80px;
     background-color: #000000;
+    
 }
 
 .about-us-container {
     max-width: 1500px;
-    margin-left: 140px;
+    margin-left: 200px;
     padding: 20px;
     padding-top: 60px;
     text-align: center;
