@@ -4,7 +4,7 @@ import axios from 'axios';
 import user_icon from '../images/icons8-name-50.png';
 import email_icon from '../images/icons8-email-30.png';
 import password_icon from '../images/icons8-password-50.png';
-import './signnew.css'; // Import CSS for styling
+import './signup.css'; // Import CSS for styling
 
 const SignUp = () => {
   const [formData, setFormData] = useState({

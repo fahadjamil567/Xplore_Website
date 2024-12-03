@@ -2,8 +2,6 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Import your components
-import AllReviews from './components/ViewReviews.jsx';
-import Header from './components/header.jsx';
 import Footer from './components/footer.jsx';
 import Login from './components/login.jsx';
 import SignUp from './components/signup.jsx';
@@ -16,7 +14,6 @@ import UserProfile from './components/UserProfile.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
 import ManageBookings from './components/ManageBookings.jsx';
 import ManageDestinations from './components/ManageDestinations.jsx';
-import Review from './components/Review.jsx';
 import ContactUs from './components/ContactUs.jsx';
 import AdminSideBar from './components/adminSideBar.jsx';
 import TourGuide from './components/TourGuide.jsx';
@@ -26,7 +23,7 @@ import PaymentPage from './components/PaymentPage.jsx';
 import WeatherForecast from './components/WeatherForecast.jsx';
 import Chatbox from './components/ChatRoom.jsx';
 import Sidebar from './components/Sidebar.jsx';
-import CarRental from './components/CarRental';
+// import CarRental from './components/CarRental';
 import Privacy from './components/PrivacyPolicy.jsx';
 import Chatbot from './components/Chatbot.jsx';
 import AdminQueryResponse from './components/AdminQueryResponse.jsx';
@@ -121,14 +118,6 @@ const App = () => {
           }
         />
         <Route
-          path="/allreviews"
-          element={
-            <UserLayout>
-              <AllReviews />
-            </UserLayout>
-          }
-        />
-        <Route
           path="/faqs"
           element={
             <UserLayout>
@@ -201,14 +190,6 @@ const App = () => {
           }
         />
         <Route
-          path="/review"
-          element={
-            <UserLayout>
-              <Review />
-            </UserLayout>
-          }
-        />
-        <Route
           path="/chat"
           element={
             <UserLayout>
@@ -216,14 +197,14 @@ const App = () => {
             </UserLayout>
           }
         />
-        <Route
+        {/* <Route
           path="/car"
           element={
             <UserLayout>
               <CarRental />
             </UserLayout>
           }
-        />
+        /> */}
         <Route
           path="/privacypolicy"
           element={

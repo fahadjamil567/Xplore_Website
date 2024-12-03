@@ -10,7 +10,7 @@ const Feedback = () => {
   const [message, setMessage] = useState('');
   const [rating, setRating] = useState('');
   const [destinationId, setDestinationId] = useState('');
-  const [destinationName, setDestinationName] = useState('');
+  const [, setDestinationName] = useState('');
   const [destinations, setDestinations] = useState([]);
   const [, setLoadingName] = useState(true);
 
@@ -189,7 +189,7 @@ const Feedback = () => {
           <div className="feedback-form-group">
             <label>Rating</label>
             <div className="feedback-rating">
-              {[1, 2, 3, 4, 5].map((star) => (
+              {[5, 4, 3, 2, 1].map((star) => (
                 <React.Fragment key={star}>
                   <input
                     type="radio"
