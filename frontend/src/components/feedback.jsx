@@ -3,7 +3,7 @@ import './feedback.css';
 
 const Feedback = () => {
   const [reviews, setReviews] = useState([]);
-  const [loadingReviews, setLoadingReviews] = useState(true);
+  const [,setLoadingReviews] = useState(true);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ const Feedback = () => {
   const [destinationId, setDestinationId] = useState('');
   const [destinationName, setDestinationName] = useState('');
   const [destinations, setDestinations] = useState([]);
-  const [loadingName, setLoadingName] = useState(true);
+  const [, setLoadingName] = useState(true);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -183,7 +183,7 @@ const Feedback = () => {
           <div className="feedback-form-group">
             <label>Rating</label>
             <div className="feedback-rating">
-              {[5, 4, 3, 2, 1].map((star) => (
+              {[1, 2, 3, 4, 5].map((star) => (
                 <React.Fragment key={star}>
                   <input
                     type="radio"
@@ -204,7 +204,9 @@ const Feedback = () => {
           </button>
         </form>
       </div>
+      <div className="feedback-form-container">
       <h2>User Reviews</h2>
+      </div>
       {reviews.length === 0 ? (
         <p>No reviews available.</p>
       ) : (
