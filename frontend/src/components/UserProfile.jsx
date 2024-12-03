@@ -155,6 +155,7 @@ const UserProfile = () => {
                   <th>Tour ID</th>
                   <th>Tour Name</th>
                   <th>Booking Date</th>
+                  <th>NO of Tickets</th>
                   <th>Booking Status</th>
                   <th>Travel Date</th>
                   <th>Actions</th>
@@ -166,6 +167,7 @@ const UserProfile = () => {
                     <td>{booking.DestinationId}</td>
                     <td>{booking.Departure}</td>
                     <td>{booking.BookingDate}</td>
+                    <td>{booking.Tickets}</td>
                     <td>{booking.Status}</td>
                     <td>{booking.TravelDate}</td>
                     <td>
