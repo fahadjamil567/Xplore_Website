@@ -118,6 +118,12 @@ const Feedback = () => {
       setDestinationId('');
       setMessage('');
       setRating('');
+      
+      // Re-fetch reviews after successful submission
+      const reviewsResponse = await fetch('http://127.0.0.1:8000/api/feedback/view/');
+      if (!reviewsResponse.ok) throw new Error('Failed to fetch reviews');
+      const updatedReviews = await reviewsResponse.json();
+      setReviews(updatedReviews); // Update the reviews state
     } catch (error) {
       console.error(error);
       alert('Error submitting feedback. Please try again.');
