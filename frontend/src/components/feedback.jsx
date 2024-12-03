@@ -26,10 +26,10 @@ const Feedback = () => {
   };
 
   return (
-    <div className="container">
+    <div className="rev-container">
       <h2>Feedback Form</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="rev-form-group">
           <label htmlFor="name">Full Name</label>
           <input
             type="text"
@@ -40,7 +40,7 @@ const Feedback = () => {
           />
         </div>
         <p></p>
-        <div className="form-group">
+        <div className="rev-form-group">
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -51,7 +51,7 @@ const Feedback = () => {
           />
         </div>
         <p></p>
-        <div className="form-group">
+        <div className="rev-form-group">
           <label htmlFor="tour">Select Tour:</label>
           <select
             id="tour"
@@ -65,7 +65,7 @@ const Feedback = () => {
           </select>
         </div>
         <p></p>
-        <div className="form-group">
+        <div className="rev-form-group">
           <label htmlFor="message">Message</label>
           <textarea
             id="message"
@@ -76,7 +76,7 @@ const Feedback = () => {
           ></textarea>
         </div>
         <p></p>
-        <div className="form-group">
+        <div className="rev-form-group">
           <label>Rating</label>
           <div className="rating">
             {[5, 4, 3, 2, 1].map((star) => (
@@ -94,7 +94,7 @@ const Feedback = () => {
             ))}
           </div>
         </div>
-        <button type="submit" className="btn">Send Feedback</button>
+        <button type="submit" className="rev-btn">Send Feedback</button>
       </form>
       <div className="reviews">
         {reviews.map((review, index) => (

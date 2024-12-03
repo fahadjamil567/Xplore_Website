@@ -119,7 +119,7 @@ const Chat = () => {
           ))}
         </div>
 
-        <div className="chat-container" ref={chatContainerRef}>
+        <div className="bot-chat-container" ref={chatContainerRef}>
           {messages.map((message, index) => (
             <div
               key={index}

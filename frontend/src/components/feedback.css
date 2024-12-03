@@ -1,5 +1,5 @@
 body {
-    background-image: "/images/t3.jpg";
+    /* background-image: url("/images/t3.jpg"); */
     background-size: cover;
     background-position: center;
     font-family: Arial, sans-serif;
@@ -7,31 +7,43 @@ body {
     background-color: #f4f4f4;
 }
 
-.container {
+.rev-container {
     width: 100%;
+    max-width: 800px; /* Restrict max width for the container */
     margin: 0 auto;
     margin-top: 100px;
     margin-bottom: 40px;
     padding: 20px;
     background: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* Optional rounded corners */
 }
 
-.form-group {
+.rev-form-group {
     margin-bottom: 15px;
-    width: 80%;
+    width: 100%; /* Ensure it spans full width within the container */
 }
 
 label {
-    display:flexbox;
+    display: block; /* Ensure labels are block-level */
     margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold; /* Make labels stand out */
 }
 
-input[type="text"], input[type="email"], select,textarea {
+input[type="text"], input[type="email"], select, textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+    margin-bottom: 10px; /* Add spacing below inputs */
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px; /* Minimum height for better usability */
 }
 
 .rating {
@@ -59,19 +71,21 @@ input[type="text"], input[type="email"], select,textarea {
     color: #f0ad4e;
 }
 
-.btn {
+.rev-btn {
     background-color: #4CAF50;
     color: white;
-    padding: 10px;
+    padding: 12px 20px;
     margin-top: 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
+    width: 100%; /* Button takes full width of its container */
+    font-size: 16px;
     text-align: center;
+    transition: background-color 0.3s ease;
 }
 
-.btn:hover {
+.rev-btn:hover {
     background-color: #45a049;
 }
 
@@ -92,4 +106,5 @@ input[type="text"], input[type="email"], select,textarea {
 
 .review small {
     color: #777;
+    font-size: 14px;
 }

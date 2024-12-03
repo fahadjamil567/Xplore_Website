@@ -7,7 +7,6 @@
   background-size: cover; /* Ensure the background image covers the area */
   background-position: center; /* Center the background image */
   background-repeat: no-repeat; /* Prevent the image from repeating */
-  /* position: relative; */
   color: black; /* Text color for readability */
 }
 
@@ -43,8 +42,9 @@
 
 .booking-form {
   display: flex;
-  flex-direction: column;
-  align-items: center; /* Center align form elements */
+  flex-direction: column; /* Align items vertically */
+  align-items: center; /* Center form elements horizontally */
+  width: 100%;
 }
 
 .form-group {
@@ -52,6 +52,8 @@
   width: 100%; /* Ensure input fields stretch across */
   max-width: 750px; /* Limit width for larger screens */
   text-align: left;
+  padding-left: 10px; /* Added padding to fix alignment issue */
+  padding-right: 10px; /* Added padding for right side as well */
 }
 
 .form-group label {
@@ -66,7 +68,6 @@
 .form-group textarea {
   width: 100%;
   padding: 10px;
-  margin-left: 100px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 18px;
