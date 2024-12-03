@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, viewsets
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User, Booking, Wishlist, Destination, ChatMessage
-from .serializers import UserSerializer, BookingSerializer, DestinationSerializer, WishlistSerializer, ChatMessageSerializer
+from .serializers import UserSerializer, BookingSerializer, DestinationSerializer, WishlistSerializer, ChatMessageSerializer,FeedbackSerializer
 from django.conf import settings
 from datetime import datetime
 import requests
@@ -373,36 +373,6 @@ from rest_framework import status
 from .models import Destination
 from datetime import datetime
 
-# Fetch Departure Dates Based on Destination
-# @api_view(['GET'])
-# def get_departure_dates(request):
-#     destination_id = request.GET.get('destination_id')
-    
-#     if not destination_id:
-#         return Response({'error': 'Destination ID is required'}, status=status.HTTP_400_BAD_REQUEST)
-    
-#     try:
-#         destination = Destination.objects.get(id=destination_id)
-        
-#         # Fetch tours that are related to this destination
-#         tours = Tour.objects.filter(destination=destination)
-        
-#         if not tours.exists():
-#             return Response({'error': 'No tours found for the selected destination'}, status=status.HTTP_404_NOT_FOUND)
-        
-#         # Prepare the departure dates for each tour
-#         departure_dates = []
-#         for tour in tours:
-#             if tour.departure_date:
-#                 departure_dates.append(tour.departure_date.strftime('%Y-%m-%d'))
-        
-#         if not departure_dates:
-#             return Response({'error': 'No departure dates available for the selected destination'}, status=status.HTTP_404_NOT_FOUND)
-
-#         return Response({'departure_dates': departure_dates}, status=status.HTTP_200_OK)
-    
-#     except Destination.DoesNotExist:
-#         return Response({'error': 'Destination not found'}, status=status.HTTP_404_NOT_FOUND)
 
 class WishlistView(APIView):
     def get(self, request):
@@ -521,36 +491,6 @@ class FetchChatMessagesView(APIView):
             return JsonResponse({"error": str(e)}, status=500)
 
 
-"""
-
-def chat_view(request):
-    if request.method == "POST":
-        print("yae")
-        try:
-            print("hello")
-            # Parse the JSON body
-            
-            user_message = request.data.get("message", "").strip()
-
-            if not user_message:
-                return JsonResponse({"error": "Message is required."}, status=400)
-
-            # Start a chat session with the model
-            chat_session = model.start_chat(history=[])
-            response =  user_message
-            #chat_session.send_message(user_message)
-
-            if response:
-                return JsonResponse({"response": response.text}, status=200)
-            else:
-                return JsonResponse({"error": "No response from Gemini AI."}, status=500)
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
-    else:
-        return JsonResponse({"error": "Invalid request method."}, status=405)
-"""
-
-
 @api_view(['POST'])
 def chat_view(request):
     if request.method == 'POST':
@@ -573,111 +513,17 @@ def chat_view(request):
     return JsonResponse({"error": "Invalid request method."}, status=405)
 
 
-"""
-# chat/views.py
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.shortcuts import get_object_or_404
-from .models import 
-from .serializers import ChatSessionSerializer, MessageSerializer
-from .services import AIService
-
-
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-#from .services import AIService
-
-class GeminiAIView(APIView):
-    
-
+class FeedbackSubmitView(APIView):
     def post(self, request, *args, **kwargs):
-       
-        user_message = request.data.get('message', '').strip()
+        email = request.data.get('email')  
 
-        if not user_message:
-            return Response(
-                {"error": "Message content is required."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+ 
+        if not Booking.objects.filter(UserEmail=email).exists():  
+            return Response({"error": "No booking found for this email."}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            # Initialize the AI service
-            ai_service = AIService()
-
-            # Get the AI response
-            ai_response = ai_service.get_response(user_message)
-
-            return Response(
-                {"response": ai_response},
-                status=status.HTTP_200_OK
-            )
-
-        except Exception as e:
-            return Response(
-                {"error": f"Failed to get response: {str(e)}"},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-class ChatSessionView(APIView):
-    def get(self, request):
+        serializer = FeedbackSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Feedback submitted successfully!"}, status=status.HTTP_201_CREATED)
         
-        sessions = ChatSession.objects.all()
-        serializer = ChatSessionSerializer(sessions, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        
-        session = ChatSession.objects.create(user=request.user if request.user.is_authenticated else None)
-        serializer = ChatSessionSerializer(session)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-class ChatMessageView(APIView):
-    def get(self, request, session_id):
-       
-        session = get_object_or_404(ChatSession, id=session_id)
-        messages = Message.objects.filter(session=session)
-        serializer = MessageSerializer(messages, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, session_id):
-    
-        session = get_object_or_404(ChatSession, id=session_id)
-        user_message = request.data.get('message', '').strip()
-
-        if not user_message:
-            return Response(
-                {'error': 'Message content is required'}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        # Save user message
-        Message.objects.create(
-            session=session,
-            content=user_message,
-            is_user=True
-        )
-
-        # Get AI response
-        ai_service = AIService()
-        ai_response = ai_service.get_response(user_message)
-
-        # Save AI response
-        ai_message = Message.objects.create(
-            session=session,
-            content=ai_response,
-            is_user=False
-        )
-
-        # Update session's last interaction time
-        session.save()  # This updates last_interaction due to auto_now=True
-
-        return Response({
-            'message': MessageSerializer(ai_message).data
-        }, status=status.HTTP_201_CREATED)
-
-        
-        
-"""
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

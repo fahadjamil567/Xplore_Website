@@ -18,7 +18,8 @@ from .views import (
     chat_view,
     SaveChatMessageView,
     FetchChatMessagesView,
-    #GeminiAIView,
+    FeedbackSubmitView,
+
 
 
 )
@@ -34,7 +35,6 @@ urlpatterns = [
     path('bookings/status/<int:booking_id>/', UpdateBookingStatusView.as_view(), name='update-booking-status'),
     path('user-bookings/', views.get_user_bookings, name='get_user_bookings'),
     path('weather/', WeatherForecastView.as_view(), name='weather-forecast'),
-    #path('ask/', GeminiAIView.as_view(), name='ask_open_gemini'),
     path("chat/", chat_view, name="chat_view"),
     path('save-chat-message/', SaveChatMessageView.as_view(), name='save-chat-message'),
     path('fetch-messages/', FetchChatMessagesView.as_view(), name='fetch-chat-messages'),
@@ -47,6 +47,8 @@ urlpatterns = [
     path('wishlist/', WishlistView.as_view(), name='wishlist'),  # For listing and adding
     path('wishlist/<int:pk>/', WishlistView.as_view(), name='wishlist-detail'),  # For removing
     path('wishlist/check/', views.check_wishlist, name='check_wishlist'),
+
+    path('feedback/', FeedbackSubmitView.as_view(), name='feedback_submit'),
 
 ]
 

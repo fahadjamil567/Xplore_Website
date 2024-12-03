@@ -44,9 +44,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-from django.db import models
-
-from datetime import timedelta
 
 class Destination(models.Model):
     DestinationId = models.AutoField(primary_key=True)
@@ -118,29 +115,12 @@ class ChatMessage(models.Model):
     class Meta:
         ordering = ['created_at']  # Order messages by the creation time
 
-
-"""
-    
-# chat/models.py
-class ChatSession(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    last_interaction = models.DateTimeField(auto_now=True)
+class Feedback(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    destinationId = models.IntegerField(default=0)
+    message = models.TextField()
+    rating = models.PositiveIntegerField(choices=[(i, str(i)) for i in range(1, 6)])
 
     def __str__(self):
-        return f"Chat Session {self.id} - {self.created_at}"
-
-class Message(models.Model):
-    session = models.ForeignKey('ChatSession', on_delete=models.CASCADE)
-    content = models.TextField()
-    is_user = models.BooleanField(default=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['timestamp']
-
-    def __str__(self):
-        return f"{'User' if self.is_user else 'AI'} message in session {self.session_id}"  
-
-        
-"""
+        return f"Feedback from {self.user_name} for {self.destination.name}"

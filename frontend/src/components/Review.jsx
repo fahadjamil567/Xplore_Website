@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import './Review.css'
+import './Review.css';
 
 const Feedback = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [rating, setRating] = useState('');
-  const [tour, setTour] = useState('');
-  const [tours, setTours] = useState([]); // Assuming you have a list of tours
+  const [destinationId, setDestinationId] = useState('');
+  const [destinations, setDestinations] = useState([]);
 
   useEffect(() => {
-    const fetchTours = async () => {
-      const response = await fetch('/api/tours');
-      const data = await response.json();
-      setTours(data);
+    const fetchDestinations = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/destinations/');
+        if (!response.ok) throw new Error('Failed to fetch destinations');
+        const data = await response.json();
+        setDestinations(data);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    fetchTours();
+    fetchDestinations();
   }, []);
 
   const validateForm = () => {
-    if (!name || !email || !message || !rating) {
-      alert("Please fill out all fields and select a rating.");
+    if (!name || !email || !message || !rating || !destinationId) {
+      alert('Please fill out all fields and select a rating.');
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email address.');
       return false;
     }
     return true;
@@ -31,26 +41,31 @@ const Feedback = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const feedbackData = { name, email, tour, message, rating };
-    await fetch('/api/feedback', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(feedbackData),
-    });
+    const feedbackData = { name, email, destinationId, message, rating };
 
-    // Reset the form fields
-    setName('');
-    setEmail('');
-    setTour('');
-    setMessage('');
-    setRating('');
-    alert('Feedback submitted successfully!');
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/feedback/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(feedbackData),
+      });
+      if (!response.ok) throw new Error('Failed to submit feedback');
+      alert('Feedback submitted successfully!');
+      setName('');
+      setEmail('');
+      setDestinationId('');
+      setMessage('');
+      setRating('');
+    } catch (error) {
+      console.error(error);
+      alert('Error submitting feedback. Please try again.');
+    }
   };
 
   return (
-    <div className="feedback-body"> {/* Ensure the background image is applied here */}
+    <div className="feedback-body">
       <header>
         <nav>
           <ul>
@@ -64,7 +79,7 @@ const Feedback = () => {
         </nav>
       </header>
       
-      <div className="container">
+      <div className="feedback-container">
         <h2>Feedback Form</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -77,7 +92,7 @@ const Feedback = () => {
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -90,16 +105,18 @@ const Feedback = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="tour">Select Tour:</label>
+            <label htmlFor="destination">Select Destination</label>
             <select
-              id="tour"
-              value={tour}
-              onChange={(e) => setTour(e.target.value)}
+              id="destination"
+              value={destinationId}
+              onChange={(e) => setDestinationId(e.target.value)}
               required
             >
-              <option value="">Select a tour</option>
-              {tours.map((tourItem, index) => (
-                <option key={index} value={tourItem.id}>{tourItem.name}</option>
+              <option value="">Select a destination</option>
+              {destinations.map((destination) => (
+                <option key={destination.destinationId} value={destination.destinationId}>
+                  {destination.Name}
+                </option>
               ))}
             </select>
           </div>
@@ -134,63 +151,12 @@ const Feedback = () => {
               ))}
             </div>
           </div>
-          
+
           <button type="submit" className="btn">Send Feedback</button>
         </form>
       </div>
     </div>
   );
 };
-
-
-
-
-const styles = {
-    body: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      backgroundImage: 'url("/images/t6.jpg")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      margin: 0,
-    },
-    container: {
-      backgroundColor: '#fff',
-      padding: '60px',
-      margin: '100px',
-      borderRadius: '10px',
-      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-      width: '400px',
-      textAlign: 'center',
-    },
-    formGroup: {
-      marginBottom: '15px',
-      textAlign: 'left',
-    },
-    input: {
-      width: '100%',
-      padding: '10px',
-      border: '1px solid #ccc',
-      borderRadius: '5px',
-    },
-    button: {
-      width: '100%',
-      padding: '10px',
-      backgroundColor: '#007bff',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-    },
-    buttonHover: {
-      backgroundColor: '#0056b3',
-    },
-    error: {
-      color: 'red',
-      marginTop: '5px',
-    },
-  };
 
 export default Feedback;
