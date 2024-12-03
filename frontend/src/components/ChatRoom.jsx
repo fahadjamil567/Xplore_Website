@@ -118,7 +118,7 @@ class ChatRoom extends Component {
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`chat-message ${msg.sender === "user" ? "user-message" : "bot-message"}`}
+              className={`chat-message ${msg.sender === "user" ? "cr-user-message" : "bot-message"}`}
             >
               <div className="message-info">
                 <span className="username">{userNames[msg.email] || msg.email}</span>

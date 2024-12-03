@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";  // Importing Axios
 import "./Chatbot.css";
 import { FaArrowAltCircleRight } from "react-icons/fa";
-import { FaArrowRight, FaCircleArrowRight } from "react-icons/fa6";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
