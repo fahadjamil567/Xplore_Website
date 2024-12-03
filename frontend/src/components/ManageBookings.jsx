@@ -78,13 +78,13 @@ const ManageBookings = () => {
   return (
     <div className="manage-bookings">
       <div className="content">
-        <div className="container" style={styles.container}>
+        <div className="bookingscontainer" style={styles.bookingscontainer}>
           <h2>Manage Bookings</h2>
 
           {/* Existing Bookings Section */}
           <div className="grid-section">
             <h3>Existing Bookings</h3>
-            <table>
+            <table className="bookingtable">
               <thead>
                 <tr>
                   <th>Booking ID</th>
@@ -116,13 +116,14 @@ const ManageBookings = () => {
                         {booking.Status === 'Pending' && (
                           <div>
                             <button
-                              className="btn"
+                              className="confirmbtn"
                               onClick={() => handleStatusChange(booking.BookingId, 'Confirmed')}
                             >
                               Confirm
                             </button>
+                            <p></p>
                             <button
-                              className="btn delete"
+                              className="deletebtn"
                               onClick={() => handleStatusChange(booking.BookingId, 'Canceled')}
                             >
                               Cancel
@@ -198,10 +199,10 @@ const ManageBookings = () => {
 };
 
 const styles = {
-  container: {
-      width: '80%',
-      marginTop: '100px',
-      marginLeft: '300px',
+  bookingscontainer: {
+      width: '87%',
+      marginTop: '10px',
+      marginLeft: '200px',
       background: '#fff',
       padding: '20px',
       boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',

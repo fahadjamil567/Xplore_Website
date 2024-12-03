@@ -82,7 +82,7 @@ const PaymentPage = () => {
         <p>{`Location: ${location.state.location}`}</p>
         <p>{`Number of Tickets: ${bookingDetails.numTickets}`}</p>
         <p>{`Total Price: Rs. ${totalPrice}`}</p>
-
+        <p>------------------------------------------------------------------</p>
         {/* Optional: Display Special Requests */}
         {bookingDetails.specialRequests && (
           <div>
