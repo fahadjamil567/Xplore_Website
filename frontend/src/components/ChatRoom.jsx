@@ -6,7 +6,12 @@ class ChatRoom extends Component {
     super(props);
     this.state = {
       messages: [
-        { text: "Hello! Welcome to the travel chat.", sender: "bot", time: "2:40:22 AM", email: "bot@example.com" },
+        { 
+          text: "Hello! Welcome to the travel chat.", 
+          sender: "bot", 
+          created_at: new Date().toISOString(), // Example ISO timestamp 
+          email: "bot@example.com" 
+        },
       ],
       newMessage: "",
       userNames: {}, // Store usernames mapped by email
@@ -65,11 +70,11 @@ class ChatRoom extends Component {
     const { newMessage, messages } = this.state;
 
     if (newMessage.trim() !== "") {
-      const currentTime = new Date().toLocaleTimeString();
+      const currentTime = new Date().toISOString(); // Store as ISO timestamp
       const userMessage = {
-        text: newMessage,
+        message: newMessage,
         sender: "user",
-        time: currentTime,
+        created_at: currentTime, // Use current ISO timestamp
         email: localStorage.getItem("userEmail"), // Store email of the logged-in user
       };
 
@@ -96,7 +101,7 @@ class ChatRoom extends Component {
         body: JSON.stringify({
           email: localStorage.getItem("userEmail"),
           message: message,
-          time: time,
+          time: time, // Send as ISO timestamp
         }),
       });
 
@@ -106,6 +111,12 @@ class ChatRoom extends Component {
     } catch (error) {
       console.error("Error while saving message:", error);
     }
+  };
+
+  // Helper function to format timestamps into user-friendly strings
+  formatDateTime = (isoString) => {
+    const date = new Date(isoString);
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
   };
 
   render() {
@@ -122,17 +133,15 @@ class ChatRoom extends Component {
             >
               <div className="message-info">
                 <span className="username">{userNames[msg.email] || msg.email}</span>
-                <span className="chat-time">{msg.time}</span>
-                <span className="chat-message">{msg.message}</span>
-                
+                <span className="chat-time">{this.formatDateTime(msg.created_at)}</span>
               </div>
-              <p>{msg.text}</p>
+              <p>{msg.message}</p>
             </div>
           ))}
         </div>
         <div className="chat-input">
           <input
-            type="text"
+            type="message"
             placeholder="Type your message..."
             value={newMessage}
             onChange={(e) => this.setState({ newMessage: e.target.value })}

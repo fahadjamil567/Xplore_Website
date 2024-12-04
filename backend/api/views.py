@@ -446,28 +446,34 @@ model = genai.GenerativeModel(
 class SaveChatMessageView(APIView):
     def post(self, request):
         try:
-            
             email = request.data.get('email')
             message = request.data.get('message')
-            time = request.data.get('time')
-            
+            created_at = request.data.get('created_at')
 
-            if not email or not message or not time:
+            # Validate required fields
+            if not email or not message:
                 return JsonResponse({"error": "Missing required fields"}, status=400)
+
+            # Use the provided timestamp or fallback to the current time
+            if created_at:
+                created_at = datetime.fromisoformat(created_at)
+            else:
+                created_at = datetime.now()
 
             # Create and save the new chat message
             chat_message = ChatMessage.objects.create(
                 email=email,
                 message=message,
-                time=time
+                created_at=created_at
             )
 
             return JsonResponse({"message": "Message saved successfully"}, status=201)
-        
+
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
         
 
+    
 
 class FetchChatMessagesView(APIView):
     def get(self, request):
@@ -516,6 +522,8 @@ def chat_view(request):
 class FeedbackSubmitView(APIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email')  
+
+ 
         if not Booking.objects.filter(UserEmail=email).exists():  
             return Response({"error": "No booking found for this email."}, status=status.HTTP_400_BAD_REQUEST)
         
