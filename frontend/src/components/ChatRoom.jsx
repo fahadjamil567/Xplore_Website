@@ -6,7 +6,12 @@ class ChatRoom extends Component {
     super(props);
     this.state = {
       messages: [
-        { text: "Hello! Welcome to the travel chat.", sender: "bot", time: "2:40:22 AM", email: "bot@example.com" },
+        { 
+          text: "Hello! Welcome to the travel chat.", 
+          sender: "bot", 
+          created_at: new Date().toISOString(), 
+          email: "bot@example.com" 
+        },
       ],
       newMessage: "",
       userNames: {}, // Store usernames mapped by email
@@ -50,7 +55,6 @@ class ChatRoom extends Component {
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/user-profile/?email=${email}`);
       const data = await response.json();
-
       if (data.user) {
         userNames[email] = data.user.Username; // Add the fetched username to the map
       } else {
@@ -63,14 +67,15 @@ class ChatRoom extends Component {
 
   handleSendMessage = async () => {
     const { newMessage, messages } = this.state;
+    const loggedInEmail = localStorage.getItem("userEmail"); // Fetch the logged-in user's email
 
     if (newMessage.trim() !== "") {
-      const currentTime = new Date().toLocaleTimeString();
+      const currentTime = new Date().toISOString(); // Store as ISO timestamp
       const userMessage = {
         text: newMessage,
         sender: "user",
-        time: currentTime,
-        email: localStorage.getItem("userEmail"), // Store email of the logged-in user
+        created_at: currentTime, 
+        email: loggedInEmail,
       };
 
       // Update the UI with the new message
@@ -84,7 +89,7 @@ class ChatRoom extends Component {
     }
   };
 
-  // Function to make an API call to save the message in the database
+  // Save the message to the backend
   saveMessageToDatabase = async (message, time) => {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/save-chat-message/", {
@@ -108,8 +113,15 @@ class ChatRoom extends Component {
     }
   };
 
+  // Format timestamps into user-friendly strings
+  formatDateTime = (isoString) => {
+    const date = new Date(isoString);
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  };
+
   render() {
     const { messages, newMessage, userNames } = this.state;
+    const loggedInEmail = localStorage.getItem("userEmail"); // Logged-in user's email
 
     return (
       <div className="chat-container">
@@ -118,13 +130,14 @@ class ChatRoom extends Component {
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`chat-message ${msg.sender === "user" ? "cr-user-message" : "bot-message"}`}
+              className={`chat-message ${
+                msg.email === loggedInEmail ? "cr-user-message" : "other-message"
+              }`}
             >
               <div className="message-info">
                 <span className="username">{userNames[msg.email] || msg.email}</span>
-                <span className="chat-time">{msg.time}</span>
+                <span className="chat-time">{this.formatDateTime(msg.created_at)}</span>
                 <span className="chat-message">{msg.message}</span>
-                
               </div>
               <p>{msg.text}</p>
             </div>
@@ -138,7 +151,7 @@ class ChatRoom extends Component {
             onChange={(e) => this.setState({ newMessage: e.target.value })}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                e.preventDefault(); // Prevent default action like form submission
+                e.preventDefault();
                 this.handleSendMessage();
               }
             }}
