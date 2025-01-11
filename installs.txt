@@ -1,0 +1,19 @@
+npm install lucide-react
+npm install react-icons
+pip install django
+
+
+npm install react-chartjs-2 chart.js
+
+pip install python-decouple
+pip install django-cors-headers
+pip install djangorestframework
+pip install djangorestframework-simplejwt
+pip install mysqlclient
+
+pip install Pillow
+pip install requests
+
+
+
+ .\venv\Scripts\activate
